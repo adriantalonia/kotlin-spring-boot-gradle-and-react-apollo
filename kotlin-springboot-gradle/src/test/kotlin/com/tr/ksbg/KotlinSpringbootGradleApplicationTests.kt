@@ -9,5 +9,4 @@ class KotlinSpringbootGradleApplicationTests {
     @Test
     fun contextLoads() {
     }
-
 }
