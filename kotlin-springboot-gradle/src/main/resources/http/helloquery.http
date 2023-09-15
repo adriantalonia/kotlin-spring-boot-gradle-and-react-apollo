@@ -1,5 +1,16 @@
 GRAPHQL http://localhost:8080/graphql
 
-query {
-    helloWorld
+query getPosts {
+	getPosts {
+		id
+		title
+		description
+		author {
+			id
+			name
+			posts {
+				id
+			}
+		}
+	}
 }

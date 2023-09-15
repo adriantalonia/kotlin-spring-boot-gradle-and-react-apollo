@@ -4,7 +4,7 @@ import jakarta.persistence.*
 import java.util.*
 
 @Entity
-@Table(name = "posts")
+@Table(name = "posts", schema = "public")
 class PostEntity(
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "UUID")
