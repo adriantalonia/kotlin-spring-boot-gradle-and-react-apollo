@@ -1,6 +1,8 @@
 package com.tr.ksbg.service
 
+import com.tr.ksbg.graphql.mutation.AddUserInput
 import com.tr.ksbg.graphql.resolver.User
+import com.tr.ksbg.model.entity.UserEntity
 import com.tr.ksbg.repository.PostRepository
 import com.tr.ksbg.repository.UserRepository
 import org.springframework.stereotype.Service
@@ -23,5 +25,12 @@ class UserService(
             name = postEntity.author.name
         )
 
+    }
+
+    fun addUser(addUserInput: AddUserInput): UUID {
+        val userEntity = UserEntity(name = addUserInput.name)
+        val user = userRepository.save(userEntity)
+        user.id ?: throw RuntimeException("")
+        return user.id
     }
 }
