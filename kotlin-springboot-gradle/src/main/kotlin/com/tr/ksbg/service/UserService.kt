@@ -1,28 +1,25 @@
 package com.tr.ksbg.service
 
-import com.tr.ksbg.graphql.mutation.AddUserInput
-import com.tr.ksbg.graphql.resolver.User
+import com.tr.ksbg.model.dto.User
 import com.tr.ksbg.model.entity.UserEntity
-import com.tr.ksbg.repository.PostRepository
+import com.tr.ksbg.model.input.AddUserInput
 import com.tr.ksbg.repository.UserRepository
+import org.springframework.data.domain.PageRequest
 import org.springframework.stereotype.Service
-import java.lang.RuntimeException
 import java.util.*
 
 @Service
 class UserService(
     private val userRepository: UserRepository,
-    private val postRepository: PostRepository
 ) {
 
     fun findByPostId(postId: UUID): User {
-        val postEntity = postRepository.findById(postId).orElseThrow {
-            RuntimeException("Post does not exists for this user portId: $postId")
-        }
+
+        val userEntity = userRepository.findByPostsId(postId)
 
         return User(
-            id = postEntity.author.id,
-            name = postEntity.author.name
+            id = userEntity.id,
+            name = userEntity.name
         )
 
     }
@@ -32,5 +29,15 @@ class UserService(
         val user = userRepository.save(userEntity)
         user.id ?: throw RuntimeException("")
         return user.id
+    }
+
+    fun getUsers(page: Int, size: Int): List<User> {
+        val users = userRepository.findAll(PageRequest.of(page, size))
+        return users.map {
+            User(
+                id = it.id,
+                name = it.name
+            )
+        }.toList()
     }
 }

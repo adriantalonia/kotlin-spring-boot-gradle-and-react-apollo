@@ -1,30 +1,24 @@
 package com.tr.ksbg.graphql.resolver
 
+import com.tr.ksbg.model.dto.Post
+import com.tr.ksbg.model.dto.User
 import com.tr.ksbg.service.PostService
-import com.tr.ksbg.service.UserService
+import com.tr.ksbg.model.input.AddPostInput
 import org.springframework.graphql.data.method.annotation.Argument
+import org.springframework.graphql.data.method.annotation.MutationMapping
 import org.springframework.graphql.data.method.annotation.QueryMapping
 import org.springframework.graphql.data.method.annotation.SchemaMapping
 import org.springframework.stereotype.Controller
 import java.lang.RuntimeException
-import java.util.UUID
 
 @Controller
 class PostResolver(
-    private val userService: UserService,
     private val postService: PostService
 ) {
 
     @QueryMapping
     fun getPosts(): List<Post> {
         return postService.getPosts()
-    }
-
-    //field Resolver
-    @SchemaMapping(typeName = "Post")
-    fun author(post: Post): User {
-        val postId = post.id ?: throw RuntimeException("post id can not be null")
-        return userService.findByPostId(postId)
     }
 
     @SchemaMapping(typeName = "User")
@@ -37,15 +31,9 @@ class PostResolver(
     fun recentPosts(@Argument page: Int, @Argument size: Int): List<Post> {
         return postService.getPosts(page, size)
     }
+
+    @MutationMapping
+    fun addPost(@Argument("addPostInput") addPostInput: AddPostInput): Post {
+        return postService.addPost(addPostInput)
+    }
 }
-
-data class Post(
-    val id: UUID?,
-    val title: String,
-    val description: String?
-)
-
-data class User(
-    val id: UUID?,
-    val name: String
-)
