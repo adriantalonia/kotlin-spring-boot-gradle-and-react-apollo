@@ -36,4 +36,10 @@ class PostResolver(
     fun addPost(@Argument("addPostInput") addPostInput: AddPostInput): Post {
         return postService.addPost(addPostInput)
     }
+
+    @SchemaMapping(typeName = "User")
+    fun totalPost(user: User): Int {
+        val userId = user.id ?: throw RuntimeException("UserId can not be null")
+        return postService.getPotsByAuthor(user.id).size
+    }
 }
