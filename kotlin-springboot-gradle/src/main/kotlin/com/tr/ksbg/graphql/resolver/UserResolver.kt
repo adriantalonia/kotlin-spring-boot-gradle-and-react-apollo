@@ -15,8 +15,6 @@ import java.util.*
 class UserResolver(
     private val userService: UserService
 ) {
-
-
     @QueryMapping
     fun getUsers(@Argument page: Int, @Argument size: Int): List<User> {
         return userService.getUsers(page, size)

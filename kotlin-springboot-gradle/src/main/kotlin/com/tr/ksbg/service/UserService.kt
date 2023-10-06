@@ -14,14 +14,11 @@ class UserService(
 ) {
 
     fun findByPostId(postId: UUID): User {
-
         val userEntity = userRepository.findByPostsId(postId)
-
         return User(
             id = userEntity.id,
             name = userEntity.name
         )
-
     }
 
     fun addUser(addUserInput: AddUserInput): UUID {

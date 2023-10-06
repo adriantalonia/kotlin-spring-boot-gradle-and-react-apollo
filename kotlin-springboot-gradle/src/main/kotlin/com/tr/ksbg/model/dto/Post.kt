@@ -1,6 +1,6 @@
 package com.tr.ksbg.model.dto
 
-import java.util.*
+import java.util.UUID
 
 data class Post(
     val id: UUID?,
