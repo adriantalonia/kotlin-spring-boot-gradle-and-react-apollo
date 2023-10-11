@@ -1,5 +1,6 @@
 package com.tr.ksbg.graphql.resolver
 
+import com.tr.ksbg.model.dto.Comment
 import com.tr.ksbg.model.dto.Post
 import com.tr.ksbg.model.dto.User
 import com.tr.ksbg.model.input.AddUserInput
@@ -30,5 +31,13 @@ class UserResolver(
     fun author(post: Post): User {
         val postId = post.id ?: throw RuntimeException("post id can not be null")
         return userService.findByPostId(postId)
+    }
+
+    @SchemaMapping(typeName = "Comment")
+    fun author(comment: Comment): User {
+        return User(
+            id = UUID.randomUUID(),
+            name = "test"
+        )
     }
 }

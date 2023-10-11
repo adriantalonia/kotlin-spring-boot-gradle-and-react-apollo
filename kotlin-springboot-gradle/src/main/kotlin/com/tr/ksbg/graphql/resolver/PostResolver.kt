@@ -1,5 +1,6 @@
 package com.tr.ksbg.graphql.resolver
 
+import com.tr.ksbg.model.dto.Comment
 import com.tr.ksbg.model.dto.Post
 import com.tr.ksbg.model.dto.User
 import com.tr.ksbg.service.PostService
@@ -10,6 +11,7 @@ import org.springframework.graphql.data.method.annotation.QueryMapping
 import org.springframework.graphql.data.method.annotation.SchemaMapping
 import org.springframework.stereotype.Controller
 import java.lang.RuntimeException
+import java.util.*
 
 @Controller
 class PostResolver(
@@ -41,5 +43,13 @@ class PostResolver(
     fun totalPost(user: User): Int {
         val userId = user.id ?: throw RuntimeException("UserId can not be null")
         return postService.getPotsByAuthor(user.id).size
+    }
+    @SchemaMapping(typeName = "Comment")
+    fun post(comment: Comment): Post {
+        return Post(
+            id = UUID.randomUUID(),
+            title = "comment title",
+            description = "comment description"
+        )
     }
 }
