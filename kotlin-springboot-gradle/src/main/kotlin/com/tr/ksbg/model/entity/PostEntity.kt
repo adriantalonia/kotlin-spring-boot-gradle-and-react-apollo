@@ -8,6 +8,7 @@ import jakarta.persistence.GeneratedValue
 import jakarta.persistence.Column
 import jakarta.persistence.ManyToOne
 import jakarta.persistence.JoinColumn
+import jakarta.persistence.OneToMany
 import java.util.UUID
 
 @Entity
@@ -21,5 +22,7 @@ class PostEntity(
     val description: String? = null,
     @ManyToOne
     @JoinColumn(name = "author_id")
-    val author: UserEntity
+    val author: UserEntity,
+    @OneToMany(mappedBy = "post")
+    val comments: Set<CommentEntity> = setOf()
 )
