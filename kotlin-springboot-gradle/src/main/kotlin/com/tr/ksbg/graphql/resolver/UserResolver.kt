@@ -35,9 +35,6 @@ class UserResolver(
 
     @SchemaMapping(typeName = "Comment")
     fun author(comment: Comment): User {
-        return User(
-            id = UUID.randomUUID(),
-            name = "test"
-        )
+        return userService.findByCommentId(comment.id)
     }
 }

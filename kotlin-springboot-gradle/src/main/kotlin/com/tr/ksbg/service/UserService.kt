@@ -37,4 +37,13 @@ class UserService(
             )
         }.toList()
     }
+
+    fun findByCommentId(commentId: UUID): User {
+        commentId ?: throw RuntimeException("comment id can not be null")
+        val userEntity = userRepository.findByCommentsId(commentId)
+        return User(
+            id = userEntity.id,
+            name = userEntity.name
+        )
+    }
 }

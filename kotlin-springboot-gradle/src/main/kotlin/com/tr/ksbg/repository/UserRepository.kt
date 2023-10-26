@@ -6,4 +6,5 @@ import java.util.UUID
 
 interface UserRepository: JpaRepository<UserEntity, UUID> {
     fun findByPostsId(postId: UUID): UserEntity
+    fun findByCommentsId(commentID: UUID): UserEntity
 }
