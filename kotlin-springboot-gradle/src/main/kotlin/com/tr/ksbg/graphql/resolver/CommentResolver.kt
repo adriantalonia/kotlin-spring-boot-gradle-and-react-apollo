@@ -23,4 +23,13 @@ class CommentResolver(private val commentService: CommentService) {
             )
         )*/
     }
+
+    @SchemaMapping(typeName = "Post")
+    fun comments(post: Post): List<Comment> {
+        return commentService.getCommentsByPostId(post.id)
+    }
+    @SchemaMapping(typeName = "User")
+    fun comments(user: User): List<Comment> {
+        return commentService.getCommentsByUserId(user.id)
+    }
 }
