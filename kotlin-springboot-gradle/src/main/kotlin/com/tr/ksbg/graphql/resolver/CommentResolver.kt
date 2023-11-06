@@ -6,6 +6,8 @@ import com.tr.ksbg.model.dto.User
 import com.tr.ksbg.model.entity.CommentEntity
 import com.tr.ksbg.model.input.AddCommentInput
 import com.tr.ksbg.service.CommentService
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
 import org.springframework.graphql.data.method.annotation.Argument
 import org.springframework.graphql.data.method.annotation.MutationMapping
 import org.springframework.graphql.data.method.annotation.QueryMapping
@@ -15,6 +17,10 @@ import java.util.*
 
 @Controller
 class CommentResolver(private val commentService: CommentService) {
+
+    companion object {
+        val LOGGER: Logger = LoggerFactory.getLogger(this::class.java)
+    }
 
     @QueryMapping
     fun getComments(@Argument("page") page: Int, @Argument size: Int): List<Comment> {
@@ -29,6 +35,7 @@ class CommentResolver(private val commentService: CommentService) {
 
     @SchemaMapping(typeName = "Post")
     fun comments(post: Post): List<Comment> {
+        LOGGER.info("Fetching comments from postId: ${post.id}")
         return commentService.getCommentsByPostId(post.id)
     }
     @SchemaMapping(typeName = "User")
@@ -37,7 +44,7 @@ class CommentResolver(private val commentService: CommentService) {
     }
 
     @MutationMapping
-    fun addComment(@Argument("addCommentInput") addCommentInput: AddCommentInput): CommentEntity {
+    fun addComment(@Argument("addCommentInput") addCommentInput: AddCommentInput): Comment {
         return commentService.addComment(addCommentInput)
     }
 }

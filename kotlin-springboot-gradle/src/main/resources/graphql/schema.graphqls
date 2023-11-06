@@ -16,7 +16,6 @@ type Mutation {
 }
 
 input AddCommentInput {
-    id: ID!
     text: String!
     authorId: ID!
     postId: ID!

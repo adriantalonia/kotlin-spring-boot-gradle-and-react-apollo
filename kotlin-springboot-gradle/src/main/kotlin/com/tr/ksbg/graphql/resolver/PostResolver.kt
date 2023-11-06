@@ -5,6 +5,8 @@ import com.tr.ksbg.model.dto.Post
 import com.tr.ksbg.model.dto.User
 import com.tr.ksbg.service.PostService
 import com.tr.ksbg.model.input.AddPostInput
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
 import org.springframework.graphql.data.method.annotation.Argument
 import org.springframework.graphql.data.method.annotation.MutationMapping
 import org.springframework.graphql.data.method.annotation.QueryMapping
@@ -18,8 +20,13 @@ class PostResolver(
     private val postService: PostService
 ) {
 
+    companion object {
+        val LOGGER: Logger = LoggerFactory.getLogger(this::class.java)
+    }
+
     @QueryMapping
     fun getPosts(): List<Post> {
+        LOGGER.info("Fetching post from database")
         return postService.getPosts()
     }
 
