@@ -1,6 +1,7 @@
 package com.tr.ksbg.service
 
 import com.tr.ksbg.model.dto.Comment
+import com.tr.ksbg.model.dto.Post
 import com.tr.ksbg.model.entity.CommentEntity
 import com.tr.ksbg.model.input.AddCommentInput
 import com.tr.ksbg.repository.CommentRepository
@@ -64,4 +65,33 @@ class CommentService(
             text = commentCreated.text
         )
     }
+
+    fun getCommentsByPosts(posts: List<Post>): Map<Post, List<Comment>> {
+        /*return commentRepository.findAllByPostIds(postIds).map {
+            Comment(
+                id = it.id!!,
+                text = it.text
+            )
+        }*/
+
+        val comments = commentRepository.findAllByPostIds(posts.mapNotNull {
+            it.id
+        }.toList())
+
+        return posts.associateWith { post ->
+            comments.filter { comment -> comment.post.id == post.id }
+                .map { comment -> Comment(id = comment.id!!, text = comment.text) }
+                .toList()
+        }
+
+        /*return posts.map {
+                post -> Pair(
+            post,
+            comments.filter { comment-> comment.post.id == post.id }
+                .map { comment -> Comment(id= comment.id!!, text = comment.text)}
+                .toList()
+        )
+        }.toMap()*/
+    }
+
 }
