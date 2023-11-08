@@ -4,6 +4,7 @@ import org.springframework.graphql.data.method.annotation.Argument
 import org.springframework.graphql.data.method.annotation.QueryMapping
 import org.springframework.stereotype.Controller
 import java.time.LocalDate
+import java.time.OffsetDateTime
 import java.util.UUID
 
 @Controller
@@ -33,8 +34,10 @@ class HelloWorldResolver {
     }
 
     @QueryMapping(name = "test")
-    fun test(@Argument date: LocalDate): String {
-        return "date: $date"
+    fun test(@Argument date: LocalDate,
+             @Argument bornAt: OffsetDateTime,
+             @Argument phoneNumber: String): String {
+        return "date: $date, bornAt: $bornAt, phoneNumber: $phoneNumber"
     }
 }
 
