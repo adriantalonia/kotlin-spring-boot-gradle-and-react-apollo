@@ -1,13 +1,13 @@
 type Query {
     helloWorld: String
-    greet(name: String!): String!
+    greet(name: String! @Size(min: 5, max: 10, message: "name length should be in 5 to 10 chars")): String!
     getRandomNumbers: [Int!]!
     getEvent: Event!
     getPosts: [Post!]!
     recentPosts(page: Int!, size: Int!): [Post!]!
     getUsers(page: Int!, size: Int!): [User!]!
     getComments(page: Int!, size: Int): [Comment]!
-    test(date: Date, bornAt: DateTime, phoneNumber: PhoneNumber): String
+    test(date: Date, bornAt: DateTime, phoneNumber: PhoneNumber, email: Email): String
 }
 
 type Mutation {

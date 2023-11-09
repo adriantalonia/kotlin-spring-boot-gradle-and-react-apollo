@@ -36,8 +36,9 @@ class HelloWorldResolver {
     @QueryMapping(name = "test")
     fun test(@Argument date: LocalDate,
              @Argument bornAt: OffsetDateTime,
-             @Argument phoneNumber: String): String {
-        return "date: $date, bornAt: $bornAt, phoneNumber: $phoneNumber"
+             @Argument phoneNumber: String,
+             @Argument email: String): String {
+        return "date: $date, bornAt: $bornAt, phoneNumber: $phoneNumber, email: $email"
     }
 }
 
