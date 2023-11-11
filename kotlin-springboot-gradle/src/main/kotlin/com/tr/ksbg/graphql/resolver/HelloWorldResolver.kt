@@ -40,6 +40,12 @@ class HelloWorldResolver {
              @Argument email: String): String {
         return "date: $date, bornAt: $bornAt, phoneNumber: $phoneNumber, email: $email"
     }
+
+    @QueryMapping(name = "validationCheck")
+    fun validationCheck(
+        @Argument name: String,
+        @Argument list: List<Int>,
+        @Argument email: String) = "Works $name, list: $list, email $email"
 }
 
 data class Event(

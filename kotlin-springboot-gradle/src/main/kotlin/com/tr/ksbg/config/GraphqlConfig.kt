@@ -25,6 +25,7 @@ class GraphqlConfig {
                 .scalar(ExtendedScalars.newRegexScalar("PhoneNumber")
                     .addPattern(Pattern.compile("\\([0-9]*\\)[0-9]*")).build()
                 ).directiveWiring(validationSchemaWiring())
+                .directiveWiring(UppercaseDirective())
         }
     }
 

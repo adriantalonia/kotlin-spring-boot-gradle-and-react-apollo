@@ -7,7 +7,16 @@ type Query {
     recentPosts(page: Int!, size: Int!): [Post!]!
     getUsers(page: Int!, size: Int!): [User!]!
     getComments(page: Int!, size: Int): [Comment]!
-    test(date: Date, bornAt: DateTime, phoneNumber: PhoneNumber, email: Email): String
+    test(
+        date: Date,
+        bornAt: DateTime,
+        phoneNumber: PhoneNumber,
+        email: Email): String
+    validationCheck(
+        name: String @NotBlank(message: "It can't be empty"),
+        list: [Int!] @ContainerNotEmpty(message: "size should be less than 5"),
+        email: String @Pattern(regexp: "^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$", message: "Email is not valid")
+    ): String @Uppercase
 }
 
 type Mutation {
